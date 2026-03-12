@@ -12,13 +12,17 @@ COPY . .
 RUN npm run build
 
 # Stage 3: Run the application
-FROM node:20-alpine AS runner
+FROM node:20-alpine AS builder
 WORKDIR /app
-ENV NODE_ENV=production
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/public ./public
+
+COPY package.json package-lock.json* ./
+RUN npm install
+
+COPY src ./src
+COPY public ./public
+COPY next.config.js ./next.config.js
+
+RUN npm run build
 
 EXPOSE 3000
 CMD ["npm", "start"]
