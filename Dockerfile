@@ -19,7 +19,7 @@ COPY package.json package-lock.json* ./
 RUN npm install
 
 COPY src ./src
-COPY public ./public
+# COPY public ./public
 COPY next.config.js ./next.config.js
 
 RUN npm run build
