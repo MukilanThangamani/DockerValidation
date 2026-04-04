@@ -22,6 +22,3 @@ COPY --from=builder /app/public ./public
 
 EXPOSE 3000
 CMD ["npm", "start"]
-
-docker build -t ui-app .
-docker run -p 3000:3000 ui-app
