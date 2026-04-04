@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fabriplayui-stage
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.stage
+    environment:
+      - NODE_ENV=production

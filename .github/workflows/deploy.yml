@@ -1,0 +1,31 @@
+name: Deploy to Stage
+
+on:
+  push:
+    branches:
+      - stage
+
+jobs:
+  deploy:
+    runs-on: aws  # matches self-hosted runner label on EC2
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # match your project's Node version
+
+      - name: Stop and remove existing containers
+        run: |
+          sudo docker-compose -f docker-compose-stage.yaml down
+
+      - name: Build Docker images
+        run: |
+          sudo docker-compose -f docker-compose-stage.yaml build
+
+      - name: Start new containers
+        run: |
+          sudo docker-compose -f docker-compose-stage.yaml up -d --force-recreate
