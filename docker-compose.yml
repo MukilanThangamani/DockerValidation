@@ -6,8 +6,13 @@ services:
     container_name: fabriplayui-stage
     restart: always
     ports:
-      - "3001:3000"
+      - "3000:3000"
     env_file:
       - .env.stage
     environment:
       - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
