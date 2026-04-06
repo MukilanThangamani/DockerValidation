@@ -1,13 +1,12 @@
 name: Deploy to Stage
 
-on:
   push:
     branches:
       - stage
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
